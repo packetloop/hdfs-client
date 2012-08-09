@@ -26,7 +26,7 @@ public class HDFSClient {
             fp.seek(offset);
             int read = fp.read(buf);
             //System.err.println(read + " bytes read from " + file + ":" + offset);
-            System.out.write(buf);
+            System.out.write(buf, 0, read);
         }
     }
 }
