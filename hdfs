@@ -1,3 +1,19 @@
 #!/bin/sh
 
-hadoop jar $(dirname $0)/hdfs-client-1.0.jar com.packetloop.hdfsclient.HDFSClient $*
+if [ $(readlink -f / >/dev/null 2>&1) ]; then
+	readlink="readlink -f"
+else
+	readlink="readlink"
+fi
+
+dir=$(dirname $0)
+path=$($readlink $0)
+
+if [ "$path" = "" ]; then
+	path=$0
+else
+	path=$dir/$path
+fi
+
+hadoop jar $(dirname $path)/hdfs-client-1.0.jar com.packetloop.hdfsclient.HDFSClient $*
+
