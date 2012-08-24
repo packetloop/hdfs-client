@@ -21,12 +21,26 @@ public class HDFSClient {
         arguments.remove(0);
         while (arguments.size() > 0) {
             int offset = Integer.parseInt(arguments.remove(0));
-            int size = Integer.parseInt(arguments.remove(0));
-            byte[] buf = new byte[size];
-            fp.seek(offset);
-            int read = fp.read(buf);
-            //System.err.println(read + " bytes read from " + file + ":" + offset);
-            System.out.write(buf, 0, read);
+            if (arguments.size() == 0) {
+                // stream forever, exit
+                fp.seek(offset);
+                while (true) {
+                    int size = 1024;
+                    byte[] buf = new byte[size];
+                    int read = fp.read(buf);
+                    if (read == -1)
+                        return;
+                    System.out.write(buf, 0, read);
+                }
+            } else {
+                // continue as normal
+                int size = Integer.parseInt(arguments.remove(0));
+                byte[] buf = new byte[size];
+                fp.seek(offset);
+                int read = fp.read(buf);
+                //System.err.println(read + " bytes read from " + file + ":" + offset);
+                System.out.write(buf, 0, read);
+            }
         }
     }
 }
