@@ -15,5 +15,5 @@ else
 	path=$dir/$path
 fi
 
-hadoop jar $(dirname $path)/hdfs-client-1.0.jar com.packetloop.hdfsclient.HDFSClient $*
+/usr/local/hadoop/bin/hadoop jar $(dirname $path)/hdfs-client-1.0.jar com.packetloop.hdfsclient.HDFSClient $*
 
